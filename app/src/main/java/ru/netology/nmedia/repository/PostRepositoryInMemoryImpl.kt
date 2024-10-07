@@ -52,10 +52,32 @@ class PostRepositoryInMemoryImpl: PostRepository {
         data.value = posts
     }
 
+    override fun save(post: Post) {
+        posts = if (post.id == 0L) {
+            listOf(
+                post.copy(
+                    id = +1,
+                    author = "Me",
+                    likedByMe = false,
+                    published = "Now"
+                )
+            ) + posts
+        } else {
+            posts.map { if (it.id != post.id) it else it.copy(content = it.content) }
+        }
+        data.value = posts
+        return
+    }
+
     override fun shareById(id: Long) {
         posts = posts.map {
             if (it.id != id) it else it.copy(shareCnt = it.shareCnt + 1)
         }
+        data.value = posts
+    }
+
+    override fun removeById(id: Long) {
+        posts = posts.filter { it.id != id }
         data.value = posts
     }
 }
