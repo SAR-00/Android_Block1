@@ -3,6 +3,7 @@ package ru.netology.nmedia.activity
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import ru.netology.nmedia.adapter.OnInteractionListener
@@ -10,6 +11,7 @@ import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.util.AndroidUtils
+import ru.netology.nmedia.util.focusAndShowKeyboard
 import ru.netology.nmedia.viewmodel.PostViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -37,9 +39,7 @@ class MainActivity : AppCompatActivity() {
             override fun onRemove(post: Post) {
                 viewModel.removeById(post.id)
             }
-
-        }
-        )
+        })
 
         binding.list.adapter = adapter
         viewModel.data.observe(this) { posts ->
@@ -54,7 +54,21 @@ class MainActivity : AppCompatActivity() {
         viewModel.edited.observe(this) {
             if (it.id != 0L) {
                 binding.content.setText(it.content)
+                binding.content.focusAndShowKeyboard()
+                binding.postTextEdit.text = it.content
+                binding.editGroup.visibility = View.VISIBLE
             }
+        }
+
+        binding.close.setOnClickListener {
+            with(binding.content) {
+                setText("")
+                clearFocus()
+                AndroidUtils.hideKeyboard(this)
+            }
+
+            viewModel.clearEdited()
+            binding.editGroup.visibility = View.INVISIBLE
         }
 
         binding.save.setOnClickListener {
@@ -68,12 +82,12 @@ class MainActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
 
-                viewModel.changeContent(text.toString())
-                viewModel.save()
+                viewModel.applyChangesAndSave(text.toString())
 
                 setText("")
                 clearFocus()
                 AndroidUtils.hideKeyboard(this)
+                binding.editGroup.visibility = View.INVISIBLE
             }
         }
     }
