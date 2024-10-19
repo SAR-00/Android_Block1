@@ -49,14 +49,15 @@
         app:layout_constraintTop_toBottomOf="@+id/author"
         tools:text="21 марта в 19:47" />
 
-    <ImageView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/menu"
+        style="@style/Widget.AppThem.MenuButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/post_menu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/baseline_more_vert_24"/>
+        app:icon="@drawable/baseline_more_vert_24" />
 
     <TextView
         android:id="@+id/postText"
@@ -78,46 +79,29 @@
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="postText" />
 
-    <ImageView
-        android:id="@+id/likesIcon"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/likes"
+        style="@style/Widget.AppThem.LikeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:contentDescription="@string/post_likes"
+        android:checkable="true"
+        app:icon="@drawable/baseline_favorite_border_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/barrier2"
-        app:srcCompat="@drawable/baseline_favorite_border_24" />
+        tools:text="10"/>
 
-    <TextView
-        android:id="@+id/likesCnt"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/shares"
+        style="@style/Widget.AppThem.SharesButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toEndOf="@+id/likesIcon"
-        app:layout_constraintTop_toBottomOf="@id/barrier2"
-        tools:text="10" />
-
-    <ImageView
-        android:id="@+id/shareIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="4dp"
         android:contentDescription="@string/post_share"
-        app:layout_constraintStart_toEndOf="@+id/likesCnt"
+        app:icon="@drawable/baseline_share_24"
+        app:layout_constraintStart_toEndOf="@+id/likes"
         app:layout_constraintTop_toBottomOf="@+id/barrier2"
-        app:srcCompat="@drawable/baseline_share_24" />
-
-    <TextView
-        android:id="@+id/shareCounter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="5dp"
-        app:layout_constraintStart_toEndOf="@+id/shareIcon"
-        app:layout_constraintTop_toBottomOf="@+id/barrier2"
-        tools:text="5" />
+        tools:text="5"/>
 
     <ImageView
         android:id="@+id/seenIcon"

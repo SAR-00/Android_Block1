@@ -16,19 +16,13 @@ class PostViewHolder(
             author.text = post.author
             postText.text = post.content
             published.text = post.published
-            likesCnt.text = numberFormatting(post.likesCnt)
-            shareCounter.text = numberFormatting(post.shareCnt)
-            likesIcon.setImageResource(
-                if (post.likedByMe) {
-                    R.drawable.baseline_favorite_24
-                } else {
-                    R.drawable.baseline_favorite_border_24
-                }
-            )
-            likesIcon.setOnClickListener {
+            likes.text = numberFormatting(post.likesCnt)
+            shares.text = numberFormatting(post.shareCnt)
+            likes.isChecked = post.likedByMe
+            likes.setOnClickListener {
                 onInteractionListener.onLike(post)
             }
-            shareIcon.setOnClickListener {
+            shares.setOnClickListener {
                 onInteractionListener.onShare(post)
             }
             menu.setOnClickListener {
